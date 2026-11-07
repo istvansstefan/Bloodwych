@@ -10,14 +10,7 @@ SDL2DPlayerRenderer::SDL2DPlayerRenderer(SDL_Renderer* renderer, const Dungeon& 
 
 void SDL2DPlayerRenderer::render(const Player& player)
 {
-    const SDL_FPoint playerCenter = viewport_.tileCenter(player.x() + 0.5F, player.y() + 0.5F);
-
-    // Calculate player position in screen coordinates.
-    //const float centerX =
-    //    offsetX + (player.x() + 0.5F) * SDL2D::TILE_SIZE;
-
-    //const float centerY =
-    //    offsetY + (player.y() + 0.5F) * SDL2D::TILE_SIZE;
+    const SDL_FPoint playerCenter = viewport_.tileCenter(player.x(), player.y());
 
     // Draw player marker.
     SDL_SetRenderDrawColor(renderer_, 220, 60, 60, 255);

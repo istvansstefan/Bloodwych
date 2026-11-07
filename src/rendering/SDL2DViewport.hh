@@ -8,6 +8,7 @@ public:
         int dungeonWidth,
         int dungeonHeight);
 
+    SDL_FPoint tileTopLeft(int x, int y) const;
     SDL_FPoint tileCenter(int x, int y) const;
 
 private:

@@ -17,10 +17,18 @@ SDL2DViewport::SDL2DViewport(SDL_Renderer* renderer, int dungeonWidth, int dunge
     offsetY_ = (windowHeight - mapHeight) / 2.0F;
 }
 
-SDL_FPoint SDL2DViewport::tileCenter(int x, int y) const
+SDL_FPoint SDL2DViewport::tileTopLeft(int x, int y) const
 {
     float tileCenterX = offsetX_ + x * SDL2D::TILE_SIZE;
     float tileCenterY = offsetY_ + y * SDL2D::TILE_SIZE;
+    
+    return SDL_FPoint(tileCenterX, tileCenterY);
+}
+
+SDL_FPoint SDL2DViewport::tileCenter(int x, int y) const
+{
+    float tileCenterX = offsetX_ + (x + 0.5F) * SDL2D::TILE_SIZE;
+    float tileCenterY = offsetY_ + (y + 0.5F) * SDL2D::TILE_SIZE;
     
     return SDL_FPoint(tileCenterX, tileCenterY);
 }

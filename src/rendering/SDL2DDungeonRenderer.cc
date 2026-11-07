@@ -19,7 +19,7 @@ void SDL2DDungeonRenderer::render()
         for (int x = 0; x < dungeon_.width(); ++x)
         {
             const Tile& tile = dungeon_.tileAt(x, y);
-            const SDL_FPoint tileCenter = viewport_.tileCenter(x, y);
+            const SDL_FPoint tileCenter = viewport_.tileTopLeft(x, y);
 
             SDL_FRect rect = {
                 tileCenter.x,
