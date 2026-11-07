@@ -1,10 +1,10 @@
 #include "SDL2DDungeonRenderer.hh"
 #include "SDL2DConstants.hh"
 
-SDL2DDungeonRenderer::SDL2DDungeonRenderer(SDL_Renderer* renderer, const Dungeon& dungeon) :
+SDL2DDungeonRenderer::SDL2DDungeonRenderer(SDL_Renderer* renderer, const SDL2DViewport& viewport, const Dungeon& dungeon) :
     renderer_(renderer),
     dungeon_(dungeon),
-    viewport_(renderer_, dungeon_.width(), dungeon_.height())
+    viewport_(viewport)
 {
 }
 

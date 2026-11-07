@@ -9,12 +9,12 @@
 class SDL2DPlayerRenderer
 {
 public:
-    explicit SDL2DPlayerRenderer(SDL_Renderer* renderer, const Dungeon& dungeon);
+    explicit SDL2DPlayerRenderer(SDL_Renderer* renderer, const SDL2DViewport& viewport, const Dungeon& dungeon);
 
     void render(const Player& player);
 
 private:
     SDL_Renderer* renderer_;
     const Dungeon& dungeon_;
-    SDL2DViewport viewport_;
+    const SDL2DViewport& viewport_;
 };

@@ -3,18 +3,28 @@
 #include "SDL2DViewport.hh"
 #include "SDL2DConstants.hh"
 
-SDL2DViewport::SDL2DViewport(SDL_Renderer* renderer, int dungeonWidth, int dungeonHeight)
+SDL2DViewport::SDL2DViewport(SDL_Renderer* renderer, int dungeonWidth, int dungeonHeight) :
+    renderer_(renderer),
+    mapWidth_(dungeonWidth * SDL2D::TILE_SIZE),
+    mapHeight_(dungeonHeight * SDL2D::TILE_SIZE)
+{
+    calculateOffset();
+}
+
+void SDL2DViewport::update()
+{
+    calculateOffset();
+}
+
+void SDL2DViewport::calculateOffset()
 {
     int windowWidth = 0;
     int windowHeight = 0;
 
-    SDL_GetRenderOutputSize(renderer, &windowWidth, &windowHeight);
+    SDL_GetRenderOutputSize(renderer_, &windowWidth, &windowHeight);
 
-    const float mapWidth = dungeonWidth * SDL2D::TILE_SIZE;
-    const float mapHeight = dungeonHeight * SDL2D::TILE_SIZE;
-
-    offsetX_ = (windowWidth - mapWidth) / 2.0F;
-    offsetY_ = (windowHeight - mapHeight) / 2.0F;
+    offsetX_ = (windowWidth - mapWidth_) / 2.0F;
+    offsetY_ = (windowHeight - mapHeight_) / 2.0F;
 }
 
 SDL_FPoint SDL2DViewport::tileTopLeft(int x, int y) const

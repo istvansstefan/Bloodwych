@@ -1,10 +1,10 @@
 #include "SDL2DPlayerRenderer.hh"
 #include "SDL2DConstants.hh"
 
-SDL2DPlayerRenderer::SDL2DPlayerRenderer(SDL_Renderer* renderer, const Dungeon& dungeon) :
+SDL2DPlayerRenderer::SDL2DPlayerRenderer(SDL_Renderer* renderer, const SDL2DViewport& viewport, const Dungeon& dungeon) :
     renderer_(renderer),
     dungeon_(dungeon),
-    viewport_(renderer_, dungeon_.width(), dungeon_.height())
+    viewport_(viewport)
 {
 }
 

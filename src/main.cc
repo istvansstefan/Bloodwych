@@ -86,8 +86,10 @@ int main(int argc, char* argv[])
     	return EXIT_FAILURE;
 	}
 
-	SDL2DDungeonRenderer dungeonRenderer(sdlRenderer, dungeon);
-	SDL2DPlayerRenderer playerRenderer(sdlRenderer, dungeon);
+    SDL2DViewport viewport(sdlRenderer, dungeon.width(), dungeon.height());
+
+	SDL2DDungeonRenderer dungeonRenderer(sdlRenderer, viewport, dungeon);
+	SDL2DPlayerRenderer playerRenderer(sdlRenderer, viewport, dungeon);
 
 
     bool running = true;
@@ -107,6 +109,10 @@ int main(int argc, char* argv[])
                 case SDL_EVENT_KEY_DOWN:
                     if (event.key.key == SDLK_ESCAPE)
                         running = false;
+                    break;
+
+                case SDL_EVENT_WINDOW_RESIZED:
+                    viewport.update();
                     break;
 
                 default:
