@@ -1,40 +1,30 @@
 #include "SDL2DPlayerRenderer.hh"
 #include "SDL2DConstants.hh"
 
-SDL2DPlayerRenderer::SDL2DPlayerRenderer(SDL_Renderer* renderer)
-    : renderer_(renderer)
+SDL2DPlayerRenderer::SDL2DPlayerRenderer(SDL_Renderer* renderer, const Dungeon& dungeon) :
+    renderer_(renderer),
+    dungeon_(dungeon),
+    viewport_(renderer_, dungeon_.width(), dungeon_.height())
 {
 }
 
-void SDL2DPlayerRenderer::render(
-    const Dungeon& dungeon,
-    const Player& player)
+void SDL2DPlayerRenderer::render(const Player& player)
 {
-    int windowWidth = 0;
-    int windowHeight = 0;
-
-    SDL_GetRenderOutputSize(renderer_, &windowWidth, &windowHeight);
-
-    // Center the dungeon in the window.
-    const float mapWidth = dungeon.width() * SDL2D::TILE_SIZE;
-    const float mapHeight = dungeon.height() * SDL2D::TILE_SIZE;
-
-    const float offsetX = (windowWidth - mapWidth) / 2.0F;
-    const float offsetY = (windowHeight - mapHeight) / 2.0F;
+    const SDL_FPoint playerCenter = viewport_.tileCenter(player.x() + 0.5F, player.y() + 0.5F);
 
     // Calculate player position in screen coordinates.
-    const float centerX =
-        offsetX + (player.x() + 0.5F) * SDL2D::TILE_SIZE;
+    //const float centerX =
+    //    offsetX + (player.x() + 0.5F) * SDL2D::TILE_SIZE;
 
-    const float centerY =
-        offsetY + (player.y() + 0.5F) * SDL2D::TILE_SIZE;
+    //const float centerY =
+    //    offsetY + (player.y() + 0.5F) * SDL2D::TILE_SIZE;
 
     // Draw player marker.
     SDL_SetRenderDrawColor(renderer_, 220, 60, 60, 255);
 
     SDL_FRect playerRect = {
-        centerX - SDL2D::PLAYER_SIZE / 2.0F,
-        centerY - SDL2D::PLAYER_SIZE / 2.0F,
+        playerCenter.x - SDL2D::PLAYER_SIZE / 2.0F,
+        playerCenter.y - SDL2D::PLAYER_SIZE / 2.0F,
         SDL2D::PLAYER_SIZE,
         SDL2D::PLAYER_SIZE
     };
@@ -69,9 +59,9 @@ void SDL2DPlayerRenderer::render(
 
     SDL_RenderLine(
         renderer_,
-        centerX,
-        centerY,
-        centerX + directionX * SDL2D::DIRECTION_LENGTH,
-        centerY + directionY * SDL2D::DIRECTION_LENGTH
+        playerCenter.x,
+        playerCenter.y,
+        playerCenter.x + directionX * SDL2D::DIRECTION_LENGTH,
+        playerCenter.y + directionY * SDL2D::DIRECTION_LENGTH
     );
 }

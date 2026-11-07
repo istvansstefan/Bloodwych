@@ -86,8 +86,8 @@ int main(int argc, char* argv[])
     	return EXIT_FAILURE;
 	}
 
-	SDL2DDungeonRenderer dungeonRenderer(sdlRenderer);
-	SDL2DPlayerRenderer playerRenderer(sdlRenderer);
+	SDL2DDungeonRenderer dungeonRenderer(sdlRenderer, dungeon);
+	SDL2DPlayerRenderer playerRenderer(sdlRenderer, dungeon);
 
 
     bool running = true;
@@ -117,8 +117,8 @@ int main(int argc, char* argv[])
 		SDL_SetRenderDrawColor(sdlRenderer, 20, 20, 25, 255);
 		SDL_RenderClear(sdlRenderer);
 
-		dungeonRenderer.render(dungeon);
-		playerRenderer.render(dungeon, player);
+		dungeonRenderer.render();
+		playerRenderer.render(player);
 
 		SDL_RenderPresent(sdlRenderer);
 

@@ -17,6 +17,7 @@ add_executable(Bloodwych
     src/player/Player.cc
 	src/rendering/SDL2DDungeonRenderer.cc
 	src/rendering/SDL2DPlayerRenderer.cc
+	src/rendering/SDL2DViewport.cc
 )
 
 target_link_libraries(Bloodwych
