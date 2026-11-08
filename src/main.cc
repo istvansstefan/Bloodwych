@@ -86,8 +86,10 @@ int main(int argc, char* argv[])
     	return EXIT_FAILURE;
 	}
 
-	SDL2DDungeonRenderer dungeonRenderer(sdlRenderer);
-	SDL2DPlayerRenderer playerRenderer(sdlRenderer);
+    SDL2DViewport viewport(sdlRenderer, dungeon.width(), dungeon.height());
+
+	SDL2DDungeonRenderer dungeonRenderer(sdlRenderer, viewport, dungeon);
+	SDL2DPlayerRenderer playerRenderer(sdlRenderer, viewport, dungeon);
 
 
     bool running = true;
@@ -109,6 +111,10 @@ int main(int argc, char* argv[])
                         running = false;
                     break;
 
+                case SDL_EVENT_WINDOW_RESIZED:
+                    viewport.update();
+                    break;
+
                 default:
                     break;
             }
@@ -117,8 +123,8 @@ int main(int argc, char* argv[])
 		SDL_SetRenderDrawColor(sdlRenderer, 20, 20, 25, 255);
 		SDL_RenderClear(sdlRenderer);
 
-		dungeonRenderer.render(dungeon);
-		playerRenderer.render(dungeon, player);
+		dungeonRenderer.render();
+		playerRenderer.render(player);
 
 		SDL_RenderPresent(sdlRenderer);
 

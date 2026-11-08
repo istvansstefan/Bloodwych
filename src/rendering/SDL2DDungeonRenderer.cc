@@ -1,39 +1,29 @@
 #include "SDL2DDungeonRenderer.hh"
 #include "SDL2DConstants.hh"
 
-SDL2DDungeonRenderer::SDL2DDungeonRenderer(SDL_Renderer* renderer)
-    : renderer_(renderer)
+SDL2DDungeonRenderer::SDL2DDungeonRenderer(SDL_Renderer* renderer, const SDL2DViewport& viewport, const Dungeon& dungeon) :
+    renderer_(renderer),
+    dungeon_(dungeon),
+    viewport_(viewport)
 {
 }
 
-void SDL2DDungeonRenderer::render(const Dungeon& dungeon)
+void SDL2DDungeonRenderer::render()
 {
-    int windowWidth = 0;
-    int windowHeight = 0;
-
-    SDL_GetRenderOutputSize(renderer_, &windowWidth, &windowHeight);
-
     // Clear the background.
     //SDL_SetRenderDrawColor(renderer_, 20, 20, 25, 255);
     //SDL_RenderClear(renderer_);
 
-
-    // Center the dungeon in the window.
-    const float mapWidth = dungeon.width() * SDL2D::TILE_SIZE;
-    const float mapHeight = dungeon.height() * SDL2D::TILE_SIZE;
-
-    const float offsetX = (windowWidth - mapWidth) / 2.0F;
-    const float offsetY = (windowHeight - mapHeight) / 2.0F;
-
-    for (int y = 0; y < dungeon.height(); ++y)
+    for (int y = 0; y < dungeon_.height(); ++y)
     {
-        for (int x = 0; x < dungeon.width(); ++x)
+        for (int x = 0; x < dungeon_.width(); ++x)
         {
-            const Tile& tile = dungeon.tileAt(x, y);
+            const Tile& tile = dungeon_.tileAt(x, y);
+            const SDL_FPoint tileCenter = viewport_.tileTopLeft(x, y);
 
             SDL_FRect rect = {
-                offsetX + x * SDL2D::TILE_SIZE,
-                offsetY + y * SDL2D::TILE_SIZE,
+                tileCenter.x,
+                tileCenter.y,
                 SDL2D::TILE_SIZE,
                 SDL2D::TILE_SIZE
             };
